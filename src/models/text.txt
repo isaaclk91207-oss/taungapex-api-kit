@@ -1,0 +1,1 @@
+ (Prisma schema သုံးရင် optional)

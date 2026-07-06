@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  password      String
+  name          String?
+  phone         String?   @unique
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  role          Role      @relation(fields: [roleId], references: [id])
+  roleId        Int
+  refreshTokens RefreshToken[]
+  otpCodes      OtpCode[]
+  apiLogs       ApiLog[]
+}
+
+model Role {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  description String?
+  users       User[]
+  permissions Permission[]
+}
+
+model Permission {
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  module   String
+  action   String
+  roles    Role[]
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model OtpCode {
+  id        Int      @id @default(autoincrement())
+  code      String
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  type      String   // "login", "reset_password", "verify_email"
+  expiresAt DateTime
+  isUsed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model ApiLog {
+  id         Int      @id @default(autoincrement())
+  userId     Int?
+  user       User?    @relation(fields: [userId], references: [id])
+  method     String
+  endpoint   String
+  statusCode Int
+  ipAddress  String?
+  userAgent  String?
+  duration   Int?     // milliseconds
+  createdAt  DateTime @default(now())
+}
