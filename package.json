@@ -12,7 +12,7 @@
     "prisma:studio": "prisma studio"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ei Thazin Htay",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
