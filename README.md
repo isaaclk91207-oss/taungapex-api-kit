@@ -75,7 +75,7 @@ Create a `.env` file in the root directory:
 
 ```env
 PORT=3000
-DATABASE_URL="mysql://user:password@localhost:3306/taungapex_db"
+DATABASE_URL="mysql://user:password@localhost:3306/db"
 JWT_SECRET="your-secret-key"
 JWT_EXPIRES_IN="15m"
 JWT_REFRESH_EXPIRES_IN="7d"
