@@ -4,6 +4,9 @@ import helmet from "helmet";
 import morgan from "morgan";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import authRoutes from "./routes/auth.routes";
+import otpRoutes from "./routes/otp.routes";
+import passwordRoutes from "./routes/password.routes";
 
 const app = express();
 
@@ -13,6 +16,11 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// After middlewares, before health check:
+app.use("/auth", authRoutes);
+app.use("/auth", otpRoutes);
+app.use("/auth", passwordRoutes);
 
 // Swagger
 const swaggerOptions: swaggerJsdoc.Options = {
